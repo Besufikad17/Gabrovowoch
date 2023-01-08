@@ -7,12 +7,11 @@
 <main>
     <div class="parent">
         <div class="logo">
-          <!-- FIXME get decent logo -->
           <img src={logo} alt="logo" />
         </div>
         <div class="links">
           <a href="/"><img src={android} alt="android app" /></a>
-          <a href="/"><img src={github} alt="github" /></a>
+          <a href="https://github.com/Besufikad17/Gabrovowoch"><img src={github} alt="github" /></a>
         </div>
     </div>
 </main>
