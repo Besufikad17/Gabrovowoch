@@ -1,9 +1,8 @@
 <script>
   import like from "../assets/imgs/icons8-facebook-like-90.png";
-  
-  // FIXME props
-  export const title = "";
-  export const description = "";
+
+  export let title;
+  export let description;
   let likes = 0;
 </script>
 
@@ -18,6 +17,11 @@
 </main>
 
 <style>
+
+    .parent {
+      padding: 10px;
+      max-width: 500px;
+    }
     .action-center {
         float: right;
     }

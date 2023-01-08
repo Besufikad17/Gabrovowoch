@@ -1,14 +1,22 @@
 <script>
   import Header from "./lib/Header.svelte";
   import Card from "./lib/Card.svelte";
+  import Footer from "./lib/Footer.svelte";
+  import { onMount } from "svelte";
+  import axios from "axios";
 
-  const data = [1, 2, 3, 4];
-  let newData = [];
-  for (let i = 0; i < data.length; i++) {
-    if (i % 2 !== 0) {
-      newData.push([data[i - 1], data[i]]);
-    }
-  }
+  let data = [];
+
+  onMount(async () => {
+    axios
+      .get(`https://gabrovowoch-backend.onrender.com/jokes`)
+      .then((result) => {
+        data = [...data, result.data];
+      })
+      .catch((e) => {
+        throw e;
+      });
+  });
 </script>
 
 <main>
@@ -16,18 +24,23 @@
 
   <div class="parent">
     <div class="container">
-      {#each newData as d}
-        <div class="row">
-          <div class="child">
-            <Card title="test" description={"" + d[0]} />
+      {#each data as d}
+        {#each d as d2}
+          <div class="row">
+            <div class="child">
+              <Card title={d2.title} description={"" + d2.content} />
+            </div>
           </div>
-          <div class="child">
-            <Card title="test" description={"" + d[1]} />
-          </div>
-        </div>
+        {/each}
+      {:else}
+        <!-- this block renders when photos.length === 0 -->
+        <p>loading...</p>
       {/each}
     </div>
   </div>
+  <br />
+
+  <Footer />
 </main>
 
 <style>
