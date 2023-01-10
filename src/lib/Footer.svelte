@@ -13,6 +13,7 @@
     top: 1000px;
     text-align: center;
     height: 50px;
-    background-color: #c1bcbc;
+    color: white;
+    background-color: #626034;
   }
 </style>

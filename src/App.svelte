@@ -64,8 +64,7 @@
     width: auto;
     min-width: 400px;
     height: 300px;
-    background-color: #a8a4a4;
-    color: white;
+    background-color: #D5E7DC;
     text-align: left;
     margin: 10px;
     border-radius: 8px;
