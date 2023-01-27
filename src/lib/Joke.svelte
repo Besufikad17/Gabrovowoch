@@ -53,6 +53,7 @@
       <Header /><br />
   {/if}
 
+  {#if joke}
   <div class="parent">
     <div class="container">
       <div class="row">{#key joke}
@@ -79,6 +80,9 @@
       {/if}
     </div>
   </div>
+  {:else}
+    <p>Loading...</p>
+  {/if}
   <br />
   {#if id}
     <div class="footer">
@@ -142,7 +146,4 @@
     color: white;
   }
 
-  .index {
-    font-size: 24px;
-  }
 </style>

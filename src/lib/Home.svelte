@@ -6,6 +6,7 @@
 
   import Icon from "@iconify/svelte";
   import axios from "axios";
+  import { fly } from "svelte/transition";
   import { onMount } from "svelte";
 
 
@@ -14,7 +15,7 @@
   let data = [];
   let datas = [];
   let skip = 0;
-  let take = 10;
+  let take = 4;
 
   const fetch = async () => {
     axios
@@ -39,12 +40,12 @@
   };
 
   const next = async () => {
-    skip = skip + 10;
+    skip = skip + 4;
     fetch();
   };
 
   const previous = async () => {
-    skip = skip - 10;
+    skip = skip - 4;
     fetch();
   };
 
@@ -54,7 +55,7 @@
   });
 </script>
 
-<main>
+<main class="main">
   <Header /><br />
 
   <div class="parent">
@@ -71,21 +72,21 @@
 
       {#if isGrid}
         {#each datas as d}
-          <div class="row">
-            <div class="child">
+          <div class="row">{#key d}
+            <div class="child" in:fly={{x: 10}}>
               <Card
                 title={d[0].title}
                 description={"" + d[0].description}
                 likes={0}
               />
-            </div>
-            <div class="child">
+            </div>{/key}{#key d}
+            <div class="child" in:fly={{x: 10}}>
               <Card
                 title={d[1].title}
                 description={"" + d[1].description}
                 likes={0}
               />
-            </div>
+            </div>{/key}
           </div>
         {:else}
           <p>loading...</p>
@@ -111,11 +112,18 @@
   <br />
 
   {#if !isLoading}
-    <Footer />
+    {#if !isGrid}
+      <div class="footer">
+        <p>@2023 ጋቭሮቮዎች</p>
+      </div>
+    {:else}
+        <Footer />
+    {/if}
   {/if}
 </main>
 
 <style>
+
   .parent {
     display: flex;
     flex-direction: column;
@@ -162,6 +170,17 @@
   .navigator:hover {
     background-color: #897070;
     color: white;
+  }
+
+  .footer {
+    justify-content: center;
+    padding: 10px;
+    bottom: 0px;
+    text-align: center;
+    height: 50px;
+    color: white;
+    background-color: #626034;
+    margin-top: 173px;
   }
 
   @media (max-width: 768px) {
