@@ -3,7 +3,7 @@
 
   export let title;
   export let description;
-  let likes = 0;
+  export let likes;
   $: liked = !!likes;
 
   const likee = () => {

@@ -10,7 +10,7 @@
   .parent {
     justify-content: center;
     padding: 10px;
-    top: 1000px;
+    bottom: 0px;
     text-align: center;
     height: 50px;
     color: white;

@@ -3,32 +3,51 @@
   import Card from "./lib/Card.svelte";
   import Footer from "./lib/Footer.svelte";
   import { onMount } from "svelte";
+  import Icon from "@iconify/svelte";
   import axios from "axios";
 
+  let isLoading = true;
   let data = [];
   let datas = [];
+  let skip = 0;
+  let take = 10;
 
-  onMount(async () => {
+  const fetch = async () => {
     axios
-      .get(`https://gabrovowoch-backend.onrender.com/jokes`)
+      .get(
+        `https://gabrovowoch-backend.onrender.com/all?skip=${skip}&take=${take}&api_key=a6803db0`
+      )
       .then((result) => {
-        data = result.data;
-        let newDatas = [];
-        console.log(data.length);
-        for (let i = 0; i < data.length; i++) {
-          if (i % 2 != 0) {
-            newDatas.push([data[i - 1], data[i]]);
+        if (result.data.success) {
+          data = result.data.data;
+          let newDatas = [];
+          for (let i = 0; i < data.length; i++) {
+            if (i % 2 != 0) {
+              newDatas.push([data[i - 1], data[i]]);
+            }
           }
+          datas = [...newDatas];
         }
-        console.log(newDatas);
-        datas = [...newDatas];
       })
       .catch((e) => {
         throw e;
       });
-  });
+  };
 
- 
+  const next = async () => {
+    skip = skip + 10;
+    fetch();
+  };
+
+  const previous = async () => {
+    skip = skip - 10;
+    fetch();
+  };
+
+  onMount(async () => {
+    fetch();
+    isLoading = false;
+  });
 </script>
 
 <main>
@@ -37,23 +56,45 @@
   <div class="parent">
     <div class="container">
       {#each datas as d}
-      <div class="row">
-        <div class="child">
-          <Card title={d[0].title} description={"" + d[0].content} />
+        <div class="row">
+          <div class="child">
+            <Card
+              title={d[0].title}
+              description={"" + d[0].description}
+              likes={0}
+            />
+          </div>
+          <div class="child">
+            <Card
+              title={d[1].title}
+              description={"" + d[1].description}
+              likes={0}
+            />
+          </div>
         </div>
-        <div class="child">
-          <Card title={d[1].title} description={"" + d[1].content} />
-        </div>
-      </div>
       {:else}
-        <!-- this block renders when photos.length === 0 -->
         <p>loading...</p>
       {/each}
+
+      {#if !isLoading}
+        <div class="action-row">
+          {#if skip > 10}
+            <button on:click={previous} class="navigator">
+              <Icon icon="ic:round-keyboard-arrow-left" />
+            </button>
+          {/if}
+          <button on:click={next} class="navigator">
+            <Icon icon="ic:round-keyboard-arrow-right" />
+          </button>
+        </div>
+      {/if}
     </div>
   </div>
   <br />
 
-  <Footer />
+  {#if !isLoading}
+    <Footer />
+  {/if}
 </main>
 
 <style>
@@ -73,6 +114,11 @@
     flex-direction: row;
   }
 
+  .action-row {
+    display: flex;
+    flex-direction: row;
+  }
+
   .child {
     width: auto;
     min-width: auto;
@@ -80,6 +126,24 @@
     text-align: left;
     margin: 10px;
     border-radius: 8px;
+  }
+
+  .navigator {
+    border-radius: 5px;
+    display: flex;
+    background-color: white;
+    color: #897070;
+    border-style: solid 1px;
+    border-color: #897070;
+    align-items: center;
+    text-align: center;
+    margin-right: 10px;
+    font-size: 24px;
+  }
+
+  .navigator:hover {
+    background-color: #897070;
+    color: white;
   }
 
   @media (max-width: 768px) {
