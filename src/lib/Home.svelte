@@ -104,7 +104,7 @@
           </div>
         {/if}
       {:else}
-        <!-- <Joke /> -->
+        <Joke id={null}/>
       {/if}
     </div>
   </div>
