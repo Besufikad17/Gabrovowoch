@@ -9,7 +9,8 @@
   import { fly } from "svelte/transition";
   import { onMount } from "svelte";
 
-
+  let API_URL = import.meta.env.VITE_API_URL;
+  let API_KEY = import.meta.env.VITE_API_KEY;
   let isLoading = true;
   let isGrid = true;
   let data = [];
@@ -20,7 +21,7 @@
   const fetch = async () => {
     axios
       .get(
-        `https://gabrovowoch-backend.onrender.com/all?skip=${skip}&take=${take}&api_key=a6803db0`
+        `${API_URL}/api/all?skip=${skip}&take=${take}&api_key=${API_KEY}`
       )
       .then((result) => {
         if (result.data.success) {
@@ -75,16 +76,18 @@
           <div class="row">{#key d}
             <div class="child" in:fly={{x: 10}}>
               <Card
+                id={d[0].id}
                 title={d[0].title}
                 description={"" + d[0].description}
-                likes={0}
+                likes={d[0].likes}
               />
             </div>{/key}{#key d}
             <div class="child" in:fly={{x: 10}}>
               <Card
+                id={d[1].id}
                 title={d[1].title}
                 description={"" + d[1].description}
-                likes={0}
+                likes={d[1].likes}
               />
             </div>{/key}
           </div>

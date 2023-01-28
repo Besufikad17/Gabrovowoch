@@ -7,13 +7,16 @@
   import Icon from "@iconify/svelte";
 
   export var id;
+
+  let API_URL = import.meta.env.VITE_API_URL;
+  let API_KEY = import.meta.env.VITE_API_KEY;
   let joke = null;
   let isLoading = true;
 
   const fetchRandom = () => {
     axios
         .get(
-          `https://gabrovowoch-backend.onrender.com/random?api_key=a6803db0`
+          `${API_URL}/api/random?api_key=${API_KEY}`
         )
         .then((result) => {
           if (result.data.success) {
@@ -31,7 +34,7 @@
     if(id){
       axios
         .get(
-          `https://gabrovowoch-backend.onrender.com/joke/${id}?api_key=a6803db0`
+          `${API_URL}/api/joke/${id}?api_key=${API_KEY}`
         )
         .then((result) => {
           if (result.data.success) {
@@ -60,6 +63,7 @@
         <div class="child"  in:fly={{x: 10}}>
           {#if joke}
             <Card
+              id={joke.id}
               title={joke.title}
               description={joke.description}
               likes={joke.likes}

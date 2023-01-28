@@ -1,13 +1,24 @@
 <script>
   import like from "../assets/imgs/icons8-facebook-like-90.png";
+  import axios from "axios";
 
+  export let id;
   export let title;
   export let description;
   export let likes;
+  
+  let API_URL = import.meta.env.VITE_API_URL;
+  let API_KEY = import.meta.env.VITE_API_KEY;
+
   $: liked = !!likes;
 
   const likee = () => {
     likes++;
+    axios.put(`${API_URL}/api/like/${id}?api_key=${API_KEY}`).then((result) => {
+      console.log(result.data);
+    }).catch(error => {
+      console.log(error);
+    })
   }
 
 </script>
