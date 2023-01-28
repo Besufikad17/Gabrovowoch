@@ -1,7 +1,9 @@
 <script>
   import { user } from "./store";
+  import { useNavigate } from "svelte-navigator";
 
   let currentUser = user;
+  const naigate = useNavigate();
 
   const logout = () => {
     currentUser.update(
@@ -16,6 +18,7 @@
   <p>username: {$currentUser.username}</p>
   <p>email: {$currentUser.email}</p>
   <p>api key: {$currentUser.api_key}</p>
+  <p><a href="https://github.com/YohannesTz/gabrvowoch_backend">API usage</a></p>
   <button on:click={logout} class="primary">Logout</button>
 </main>
 
