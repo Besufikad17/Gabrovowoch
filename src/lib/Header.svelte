@@ -8,7 +8,6 @@
   const modal = writable(null);
 
   const showModal = () => modal.set(Popup);
-  console.log($user);
 
   let isLogged = $user.id || $user.email || $user.username || $user.api_key;
 </script>

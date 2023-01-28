@@ -15,7 +15,9 @@
   const likee = () => {
     likes++;
     axios.put(`${API_URL}/api/like/${id}?api_key=${API_KEY}`).then((result) => {
-      console.log(result.data);
+       if(result.data.error){
+          console.log(result.data.error.msg);
+       }
     }).catch(error => {
       console.log(error);
     })

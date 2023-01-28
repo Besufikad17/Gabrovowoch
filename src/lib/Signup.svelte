@@ -1,6 +1,7 @@
 <script>
   import { createForm } from "svelte-forms-lib";
   import { user } from "./store";
+  import { useNavigate } from "svelte-navigator";
   import axios from "axios";
   // @ts-ignore
   import * as yup from "yup";
@@ -8,6 +9,7 @@
   let API_URL = import.meta.env.VITE_API_URL;
   let newUser = user;
   let isLoading = false;
+  const navigate = useNavigate();
 
   const { form, errors, state, handleChange, handleSubmit } = createForm({
     initialValues: {
@@ -29,7 +31,7 @@
           if (result.data.data) {
             let u = result.data.data["newUser"];
             newUser.set({id: u.id, username: u.username, email: u.email, api_key: u.api_key});
-            window.location.assign("/");
+            navigate("/");
           } else {
             alert(result.data.error.msg);
           }
