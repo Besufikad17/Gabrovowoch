@@ -8,6 +8,7 @@
   import axios from "axios";
   import { fly } from "svelte/transition";
   import { onMount } from "svelte";
+  
 
   let API_URL = import.meta.env.VITE_API_URL;
   let API_KEY = import.meta.env.VITE_API_KEY;
@@ -17,6 +18,7 @@
   let datas = [];
   let skip = 0;
   let take = 4;
+ 
 
   const fetch = async () => {
     axios

@@ -1,21 +1,40 @@
 <script>
-    import logo from "../assets/imgs/logo.jpg";
-    import android from "../assets/imgs/icons8-android-96.png";
-    import github from "../assets/imgs/icons8-github-48.png";
+  import logo from "../assets/imgs/logo.jpg";
+  import Icon from "@iconify/svelte";
+  import { user } from "./store";
+  import { writable } from "svelte/store";
+  import Modal from "svelte-simple-modal";
+  import Popup from "./Popup.svelte";
+  const modal = writable(null);
+
+  const showModal = () => modal.set(Popup);
+  console.log($user);
+
+  let isLogged = $user.id || $user.email || $user.username || $user.api_key;
 </script>
 
 <main>
-    <div class="parent">
-        <div class="logo">
-          <img src={logo} alt="logo" />
-        </div>
-        <div class="links">
-          <a href="/"><img src={android} alt="android app" /></a>
-          <a href="https://github.com/Besufikad17/Gabrovowoch"><img src={github} alt="github" /></a>
-        </div>
+  <div class="parent">
+    <div class="logo">
+      <img src={logo} alt="logo" />
     </div>
+    <div class="links">
+      {#if isLogged}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <Modal show={$modal}>
+          <span on:click={showModal}>Profile</span>
+        </Modal>
+      {:else}
+        <span><a href="/login">Login</a></span>
+      {/if}
+      <a href="/"><Icon icon="jam:android" width="36" height="36" /></a>
+      <a href="https://github.com/Besufikad17/Gabrovowoch"
+        ><Icon icon="ri:github-fill" width="36" height="36" /></a
+      >
+    </div>
+  </div>
 </main>
-  
+
 <style>
   .parent {
     width: auto;
@@ -33,18 +52,23 @@
   }
   .links a {
     text-decoration: none;
-    color: white;
+    color: black;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     padding: 5px;
   }
 
-  .logo img {
-    width: 46px;
-    height: 46px;
+  span {
+    color: black;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 0px;
+    vertical-align: super;
   }
 
-  .links a img {
-    width: 46px;
-    height: 46px;
+  .logo img {
+    width: 36px;
+    height: 36px;
   }
 </style>
