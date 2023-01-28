@@ -5,9 +5,12 @@
   import { writable } from "svelte/store";
   import Modal from "svelte-simple-modal";
   import Popup from "./Popup.svelte";
+  import About from "./About.svelte";
   const modal = writable(null);
 
   const showModal = () => modal.set(Popup);
+
+  const showAbout = () => modal.set(About);
 
   let isLogged = $user.id || $user.email || $user.username || $user.api_key;
 </script>
@@ -29,7 +32,10 @@
       <a href="/"><Icon icon="jam:android" width="36" height="36" /></a>
       <a href="https://github.com/Besufikad17/Gabrovowoch"
         ><Icon icon="ri:github-fill" width="36" height="36" /></a
-      >
+      > <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <Modal show={$modal}>
+        <a href="#" on:click={showAbout}><Icon icon="mdi:about" width="36" height="36" /></a>
+      </Modal>
     </div>
   </div>
 </main>
